@@ -24,4 +24,9 @@ def handling(event):
     return {'name': 'handling', 'event': event, 'handle': 'ing', 'inputs': ['list', 'of', 'inputs', 'for', 'model']}
 
 
-
+def run_nvidia_command(event):
+    import subprocess
+    print(f'received event:\n{event}')
+    result = subprocess.run(['nvidia-smi'], capture_output=True, text=True)
+    print(result.stdout)
+    print(result.stderr)
