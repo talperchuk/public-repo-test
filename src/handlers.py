@@ -1,33 +1,14 @@
-from src.some_helpers import mul
-from random import randint
-import os
+def raising_step(event):
+    if 'error' in event:
+        raise Exception(f'On event Fail')
+    print(f'Got event: {event}\n')
+    return 'All good'
 
 
-def _walk():
-    files = [os.path.join(path, name) for path, subdirs,
-             files in os.walk('/') for name in files]
-    return list(filter(lambda x: x.startswith('/'), files))
-
-
-def great(event):
-    # print(f'{locals()}')
-    print('Greatings ?!')
-    # return {'walk': _walk()}
-    output = {'name': 'great',
-              'walk': _walk(),
-              'event': event,
-              'output': f'Greatings, before me: {mul(randint(1, 10))}'}
-    return output
-
-
-def handling(event):
-    print('handling')
-    return {'name': 'handling', 'event': event, 'handle': 'ing', 'inputs': ['list', 'of', 'inputs', 'for', 'model']}
-
-
-def run_nvidia_command(event):
-    import subprocess
-    print(f'received event:\n{event}')
-    result = subprocess.run(['nvidia-smi'], capture_output=True, text=True)
-    print(result.stdout)
-    print(result.stderr)
+def handle_error(event, *args, **kwargs):
+    print('Handling error')
+    print(f'event vars: {vars(event)}')
+    event_fields = {k: v for k, v in vars(event).items() if k in [
+        'body', 'key', 'origin_state', 'error']}
+    print(f'selected fields: {event_fields}')
+    return None
