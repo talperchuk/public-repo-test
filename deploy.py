@@ -30,5 +30,5 @@ if __name__ == '__main__':
     deploy_error_tester_function(project_name='exploration',
                                  image='mlrun/mlrun',
                                  func_name='cmd-with-error',
-                                 tag='v0',
+                                 tag='v1',
                                  )
